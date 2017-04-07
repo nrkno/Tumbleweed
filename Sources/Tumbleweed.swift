@@ -28,13 +28,7 @@ public struct Tumbleweed {
         self.task = task
         self.redirectCount = sessionTaskMetrics.redirectCount
         self.taskInterval = sessionTaskMetrics.taskInterval
-        let transactions = sessionTaskMetrics.transactionMetrics
-        if sessionTaskMetrics.redirectCount != transactions.count { // FIXME handle how?
-            NSLog("weird, did not receive transactionMetrics for all redirects")
-        }
-        self.metrics = zip(transactions, transactions.indices).map({ transaction, index in
-            return Metric(transactionMetrics: transaction, redirectIndex: index)
-        })
+        self.metrics = sessionTaskMetrics.transactionMetrics.map(Metric.init(transactionMetrics:))
     }
 
     public func render(with renderer: Renderer) {

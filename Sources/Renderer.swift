@@ -35,7 +35,7 @@ public struct ConsoleRenderer: Renderer {
     }
 
     public func render(with stats: Tumbleweed) {
-        printer("Task ID: \(stats.task.taskIdentifier) (redirect count: \(stats.redirectCount)")
+        printer("Task ID: \(stats.task.taskIdentifier) (redirects: \(stats.redirectCount))")
         for metric in stats.metrics {
             renderHeader(with: metric)
             renderMeta(with: metric)
@@ -57,7 +57,7 @@ public struct ConsoleRenderer: Renderer {
         } else {
             responseLine = "[response error]"
         }
-        printer("\(method) \(url) -> \(responseLine) (redirect #\(metric.redirectIndex))")
+        printer("\(method) \(url) -> \(responseLine)")
     }
 
     private func renderDuration(line: Metric.Duration, total: DateInterval?) {

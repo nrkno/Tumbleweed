@@ -50,12 +50,10 @@ extension URLSessionTaskMetrics.ResourceFetchType {
 
 public struct Metric {
     public let transactionMetrics: Measurable
-    public let redirectIndex: Int
     public let durations: [Duration]
 
-    public init(transactionMetrics metrics: Measurable, redirectIndex: Int) {
+    public init(transactionMetrics metrics: Measurable) {
         self.transactionMetrics = metrics
-        self.redirectIndex = redirectIndex
 
         func check(type: DurationType, _ start: Date?, _ end: Date?) -> Duration? {
             guard let start = start, let end = end else { return nil }
