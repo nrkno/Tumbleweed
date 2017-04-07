@@ -8,7 +8,7 @@
 
 import Foundation
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 public protocol Measurable {
     var request: URLRequest { get }
     var response: URLResponse? { get }
@@ -32,10 +32,10 @@ public protocol Measurable {
     var responseEndDate: Date? { get }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 extension URLSessionTaskTransactionMetrics: Measurable {}
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 extension URLSessionTaskMetrics.ResourceFetchType {
     var name: String {
         switch self {
@@ -57,7 +57,7 @@ private extension Array where Element == Metric.Duration {
     }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 public struct Metric {
     public let transactionMetrics: Measurable
     public let durations: [Duration]
@@ -144,7 +144,7 @@ public struct Metric {
     }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 extension Metric.Duration: Equatable {
     public static func ==(lhs: Metric.Duration, rhs: Metric.Duration) -> Bool {
         return rhs.type == lhs.type && rhs.interval == rhs.interval

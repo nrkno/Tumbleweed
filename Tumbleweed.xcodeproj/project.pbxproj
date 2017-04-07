@@ -29,6 +29,9 @@
 		D9A296FF1E97888D003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296FB1E97888D003638DE /* TestPrinter.swift */; };
 		D9A297001E97888D003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296FB1E97888D003638DE /* TestPrinter.swift */; };
 		D9A297011E97888D003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296FB1E97888D003638DE /* TestPrinter.swift */; };
+		D9A297021E97B4C9003638DE /* SessionMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96042CC1E962B6E002F4A75 /* SessionMetrics.swift */; };
+		D9A297031E97B4CA003638DE /* SessionMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96042CC1E962B6E002F4A75 /* SessionMetrics.swift */; };
+		D9A297041E97B4CB003638DE /* SessionMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96042CC1E962B6E002F4A75 /* SessionMetrics.swift */; };
 		DD7502881C68FEDE006590AF /* Tumbleweed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Tumbleweed.framework */; };
 		DD7502921C690C7A006590AF /* Tumbleweed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Tumbleweed.framework */; };
 /* End PBXBuildFile section */
@@ -505,6 +508,7 @@
 			files = (
 				D96042D41E962C0B002F4A75 /* Renderer.swift in Sources */,
 				D985F93B1E964EFC00E31C0B /* Metric.swift in Sources */,
+				D9A297031E97B4CA003638DE /* SessionMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +518,7 @@
 			files = (
 				D96042D51E962C0B002F4A75 /* Renderer.swift in Sources */,
 				D985F93C1E964EFC00E31C0B /* Metric.swift in Sources */,
+				D9A297041E97B4CB003638DE /* SessionMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,6 +528,7 @@
 			files = (
 				D96042D31E962C0B002F4A75 /* Renderer.swift in Sources */,
 				D985F93A1E964EFC00E31C0B /* Metric.swift in Sources */,
+				D9A297021E97B4C9003638DE /* SessionMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +727,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -736,6 +743,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -893,7 +901,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Configs/TumbleweedTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tumbleweed.Tumbleweed-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -909,7 +917,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Configs/TumbleweedTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tumbleweed.Tumbleweed-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -928,7 +936,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 3.0;
-				TVOS_DEPLOYMENT_TARGET = 9.1;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -943,7 +951,7 @@
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
-				TVOS_DEPLOYMENT_TARGET = 9.1;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};

@@ -26,7 +26,7 @@ import XCTest
 //    }
 //}
 //
-//@available(iOS 10.0, *)
+//@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 //private class MockURLSessionTaskTransactionMetrics: Measurable {
 //    var request: URLRequest
 //    var networkProtocolName: String? = "HTTP/1.1"

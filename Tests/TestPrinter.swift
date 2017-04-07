@@ -6,7 +6,7 @@
 //  Copyright © 2017 NRK. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 final class OutputBufferingPrinter {
     private(set) var output = ""
