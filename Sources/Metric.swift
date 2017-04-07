@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(iOS 10.0, *)
 public protocol Measurable {
     var request: URLRequest { get }
     var response: URLResponse? { get }
@@ -31,8 +32,10 @@ public protocol Measurable {
     var responseEndDate: Date? { get }
 }
 
+@available(iOS 10.0, *)
 extension URLSessionTaskTransactionMetrics: Measurable {}
 
+@available(iOS 10.0, *)
 extension URLSessionTaskMetrics.ResourceFetchType {
     var name: String {
         switch self {
@@ -48,6 +51,7 @@ extension URLSessionTaskMetrics.ResourceFetchType {
     }
 }
 
+@available(iOS 10.0, *)
 public struct Metric {
     public let transactionMetrics: Measurable
     public let durations: [Duration]

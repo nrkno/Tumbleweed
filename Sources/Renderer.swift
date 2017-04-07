@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(iOS 10.0, *)
 public protocol Renderer {
     func render(with stats: SessionMetrics)
 }
@@ -28,6 +29,7 @@ public protocol Renderer {
 /// request           |                                                             #                  |   0.1ms
 /// response          |                                                                               #|   0.2ms
 ///                                                                                              total   465.5ms
+@available(iOS 10.0, *)
 public struct ConsoleRenderer: Renderer {
     public var printer: (String) -> Void = { NSLog($0) }
     let columns = (left: 18, middle: 82, right: 8)

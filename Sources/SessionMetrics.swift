@@ -9,6 +9,7 @@
 import Foundation
 
 /// An object that is capable of collection metrics based on a given set of URLSessionTaskMetrics
+@available(iOS 10.0, *)
 public struct SessionMetrics {
     public let task: URLSessionTask
     public let metrics: [Metric]
@@ -29,6 +30,7 @@ public struct SessionMetrics {
 
 /// Convenience object that can be used as the delegate for a URLSession
 /// eg let session = URLSession(configuration: .default, delegate: SessionMetricsLogger(), delegateQueue: nil)
+@available(iOS 10.0, *)
 public final class SessionMetricsLogger: NSObject, URLSessionTaskDelegate {
     let renderer = ConsoleRenderer()
 
