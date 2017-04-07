@@ -29,12 +29,13 @@ class SessionMetricsTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1.0) { (error) in
-            XCTAssertEqual(self.printer.lines.count, 15)
-            XCTAssertTrue(self.printer.lines[0].hasPrefix("Task ID: 1 lifetime: "))
-            XCTAssertEqual(self.printer.lines[1], "GET https://httpbin.org/get -> 200 application/json, through local-cache")
-            XCTAssertEqual(self.printer.lines[6], "GET https://httpbin.org/get -> 200 application/json, through network-load")
+            let lines = self.printer.output.components(separatedBy: "\n")
+            XCTAssertEqual(lines.count, 15)
+            XCTAssertTrue(lines[0].hasPrefix("Task ID: 1 lifetime: "))
+            XCTAssertEqual(lines[1], "GET https://httpbin.org/get -> 200 application/json, through local-cache")
+            XCTAssertEqual(lines[6], "GET https://httpbin.org/get -> 200 application/json, through network-load")
             print("")
-            print(self.printer.lines.joined(separator: "\n"))
+            print(self.printer.output)
             print("")
         }
     }

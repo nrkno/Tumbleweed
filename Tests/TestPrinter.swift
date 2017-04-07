@@ -9,13 +9,13 @@
 import UIKit
 
 final class OutputBufferingPrinter {
-    private(set) var lines: [String] = []
+    private(set) var output = ""
 
     func print(_ line: String) {
-        lines.append(line)
+        output.append(line)
     }
 
     func reset() {
-        lines.removeAll()
+        output = ""
     }
 }

@@ -39,18 +39,21 @@ public struct ConsoleRenderer: Renderer {
     }
 
     public func render(with stats: SessionMetrics) {
-        printer("Task ID: \(stats.task.taskIdentifier) lifetime: \(stats.taskInterval.duration.ms) redirects: \(stats.redirectCount)")
+        var buffer: [String] = []
+        buffer.append("Task ID: \(stats.task.taskIdentifier) lifetime: \(stats.taskInterval.duration.ms) redirects: \(stats.redirectCount)")
         for metric in stats.metrics {
-            printer(renderHeader(with: metric))
-            printer(renderMeta(with: metric))
+            buffer.append(renderHeader(with: metric))
+            buffer.append(renderMeta(with: metric))
             let total = totalDateInterval(from: metric)
             for line in metric.durations.filter({ $0.type != .total }) {
-                printer(renderDuration(line: line, total: total))
+                buffer.append(renderDuration(line: line, total: total))
             }
             if let total = total {
-                printer(renderMetricSummary(for: total))
+                buffer.append(renderMetricSummary(for: total))
             }
         }
+
+        printer(buffer.joined(separator: "\n"))
     }
 
     func totalDateInterval(from metric: Metric) -> DateInterval? {
