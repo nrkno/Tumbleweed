@@ -82,6 +82,10 @@ public struct ConsoleRenderer: Renderer {
 
     func visualize(interval: DateInterval, total: DateInterval, within width: Int = 100) -> String {
         precondition(total.intersects(total), "supplied duration does not intersect with the total duration")
+        if interval.duration == 0 {
+            return "|" + String(repeatElement(" ", count: width)) + "|"
+        }
+
         let relativeStart = (interval.start.timeIntervalSince1970 - total.start.timeIntervalSince1970) / total.duration
         let relativeEnd = 1.0 - (total.end.timeIntervalSince1970 - interval.end.timeIntervalSince1970) / total.duration
 
