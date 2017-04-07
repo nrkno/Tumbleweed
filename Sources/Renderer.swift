@@ -35,7 +35,7 @@ public struct ConsoleRenderer: Renderer {
     }
 
     public func render(with stats: Tumbleweed) {
-        printer("Task ID: \(stats.task.taskIdentifier)")
+        printer("Task ID: \(stats.task.taskIdentifier) (redirect count: \(stats.redirectCount)")
         for metric in stats.metrics {
             renderHeader(with: metric)
             renderMeta(with: metric)
@@ -75,11 +75,14 @@ public struct ConsoleRenderer: Renderer {
         let startIndex = Int((relativeStart / factor))
         let endIndex = Int((relativeEnd / factor))
 
-        var line = ""
-        line += String(repeatElement(" ", count: (0..<startIndex).count))
-        line += String(repeatElement("#", count: (startIndex..<endIndex).count))
-        line += String(repeatElement(" ", count: (endIndex..<width).count))
-        return "|\(line)|"
+        let line: [String] = (0..<width).map { position in
+            if position >= startIndex && position <= endIndex {
+                return "#"
+            } else {
+                return " "
+            }
+        }
+        return "|\(line.joined())|"
     }
 
     private func renderMeta(with metric: Metric) {
