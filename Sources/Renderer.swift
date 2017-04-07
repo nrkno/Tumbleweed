@@ -8,25 +8,26 @@
 
 import Foundation
 
-//header:   Task ID: 1 GET https://nrk.no/foo/bar (1st redirect) 200 OK
-//meta:     protocol: HTTP/1.1 proxy: false, reusedconn: true, fetchtype: network-load
-//duration  fetch start       |#                                               |  2.3ms
-//duration  domain lookup     | ###                                            |  6.4ms
-//duration  (secure) connect  |    ####                                        |  7.0ms
-//duration  request           |        ###################                     | 24.4ms
-//duration  response          |                           #####################| 56.8ms
-//summary   [task lifetime: 1.6s]                                         total  96.9ms
-
-extension TimeInterval {
-    var ms: String {
-        return String(format: "%.1fms", self * 1000)
-    }
-}
-
 public protocol Renderer {
     func render(with stats: SessionMetrics)
 }
 
+/// Renders given SessionMetrics to the console.
+///
+/// Task ID: 1 lifetime: 485.3ms redirects: 0
+/// GET https://httpbin.org/get -> 200 application/json, through local-cache
+/// protocol: ??? proxy: false reusedconn: true
+/// request           |                                                                                |   0.0ms
+/// response          |################################################################################|   1.0ms
+///                                                                                                total   1.0ms
+/// GET https://httpbin.org/get -> 200 application/json, through network-load
+/// protocol: http/1.1 proxy: false reusedconn: false
+/// domain lookup     |######                                                                          |  34.0ms
+/// connect           |      #######################################################                   | 316.0ms
+/// secure connection |                       ######################################                   | 216.0ms
+/// request           |                                                             #                  |   0.1ms
+/// response          |                                                                               #|   0.2ms
+///                                                                                              total   465.5ms
 public struct ConsoleRenderer: Renderer {
     public var printer: (String) -> Void = { NSLog($0) }
     let columns = (left: 18, middle: 82, right: 8)
@@ -122,6 +123,12 @@ public struct ConsoleRenderer: Renderer {
     func renderMetricSummary(for interval: DateInterval) -> String {
         let width = columns.left + columns.middle + columns.right
         return "total   \(interval.duration.ms)".leftPadding(toLength: width, withPad: " ")
+    }
+}
+
+private extension TimeInterval {
+    var ms: String {
+        return String(format: "%.1fms", self * 1000)
     }
 }
 

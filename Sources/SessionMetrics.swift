@@ -8,16 +8,7 @@
 
 import Foundation
 
-//header:   Task ID: 1 GET https://nrk.no/foo/bar (1st redirect) 200 OK
-//meta:     protocol: HTTP/1.1 proxy: false, reusedconn: true, fetchtype: network-load
-//duration  fetch start       |#                                               |  2.3ms
-//duration  domain lookup     | ###                                            |  6.4ms
-//duration  (secure) connect  |    ####                                        |  7.0ms
-//duration  request           |        ###################                     | 24.4ms
-//duration  response          |                           #####################| 56.8ms
-//summary   [task lifetime: 1.6s]                                         total  96.9ms
-
-
+/// An object that is capable of collection metrics based on a given set of URLSessionTaskMetrics
 public struct SessionMetrics {
     public let task: URLSessionTask
     public let metrics: [Metric]
@@ -33,5 +24,16 @@ public struct SessionMetrics {
 
     public func render(with renderer: Renderer) {
         renderer.render(with: self)
+    }
+}
+
+/// Convenience object that can be used as the delegate for a URLSession
+/// eg let session = URLSession(configuration: .default, delegate: SessionMetricsLogger(), delegateQueue: nil)
+public final class SessionMetricsLogger: NSObject, URLSessionTaskDelegate {
+    let renderer = ConsoleRenderer()
+
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+        let gatherer = SessionMetrics(source: metrics, task: task)
+        renderer.render(with: gatherer)
     }
 }
