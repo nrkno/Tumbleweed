@@ -23,6 +23,12 @@
 		D985F93A1E964EFC00E31C0B /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985F9381E964EFC00E31C0B /* Metric.swift */; };
 		D985F93B1E964EFC00E31C0B /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985F9381E964EFC00E31C0B /* Metric.swift */; };
 		D985F93C1E964EFC00E31C0B /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985F9381E964EFC00E31C0B /* Metric.swift */; };
+		D9A296F31E976F66003638DE /* RenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F21E976F66003638DE /* RenderTests.swift */; };
+		D9A296F41E976F66003638DE /* RenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F21E976F66003638DE /* RenderTests.swift */; };
+		D9A296F51E976F66003638DE /* RenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F21E976F66003638DE /* RenderTests.swift */; };
+		D9A296F71E9770ED003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F61E9770ED003638DE /* TestPrinter.swift */; };
+		D9A296F81E9770ED003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F61E9770ED003638DE /* TestPrinter.swift */; };
+		D9A296F91E9770ED003638DE /* TestPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A296F61E9770ED003638DE /* TestPrinter.swift */; };
 		DD7502881C68FEDE006590AF /* Tumbleweed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Tumbleweed.framework */; };
 		DD7502921C690C7A006590AF /* Tumbleweed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Tumbleweed.framework */; };
 /* End PBXBuildFile section */
@@ -64,6 +70,8 @@
 		D96042D11E962C0B002F4A75 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = Sources/Renderer.swift; sourceTree = "<group>"; };
 		D985F9341E963AD000E31C0B /* MetricsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetricsTests.swift; path = Tests/MetricsTests.swift; sourceTree = "<group>"; };
 		D985F9381E964EFC00E31C0B /* Metric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Metric.swift; path = Sources/Metric.swift; sourceTree = "<group>"; };
+		D9A296F21E976F66003638DE /* RenderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderTests.swift; path = Sources/RenderTests.swift; sourceTree = "<group>"; };
+		D9A296F61E9770ED003638DE /* TestPrinter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestPrinter.swift; path = Sources/TestPrinter.swift; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Tumbleweed-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tumbleweed-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75028D1C690C7A006590AF /* Tumbleweed-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tumbleweed-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -172,6 +180,8 @@
 			children = (
 				D96042CF1E962BC6002F4A75 /* TumbleweedTests.swift */,
 				D985F9341E963AD000E31C0B /* MetricsTests.swift */,
+				D9A296F21E976F66003638DE /* RenderTests.swift */,
+				D9A296F61E9770ED003638DE /* TestPrinter.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -482,7 +492,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A296F71E9770ED003638DE /* TestPrinter.swift in Sources */,
 				D985F9311E9635D300E31C0B /* TumbleweedTests.swift in Sources */,
+				D9A296F31E976F66003638DE /* RenderTests.swift in Sources */,
 				D985F9351E963AD000E31C0B /* MetricsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,7 +530,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A296F81E9770ED003638DE /* TestPrinter.swift in Sources */,
 				D985F9321E9635D400E31C0B /* TumbleweedTests.swift in Sources */,
+				D9A296F41E976F66003638DE /* RenderTests.swift in Sources */,
 				D985F9361E963AD000E31C0B /* MetricsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,7 +541,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A296F91E9770ED003638DE /* TestPrinter.swift in Sources */,
 				D985F9331E9635D400E31C0B /* TumbleweedTests.swift in Sources */,
+				D9A296F51E976F66003638DE /* RenderTests.swift in Sources */,
 				D985F9371E963AD000E31C0B /* MetricsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

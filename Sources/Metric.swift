@@ -84,6 +84,11 @@ public struct Metric {
         self.durations = durations
     }
 
+    internal init(transactionMetrics metrics: Measurable, durations: [Duration]) {
+        self.transactionMetrics = metrics
+        self.durations = durations
+    }
+
     public enum DurationType {
         case domainLookup
         case connect

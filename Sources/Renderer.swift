@@ -39,11 +39,25 @@ public struct ConsoleRenderer: Renderer {
         for metric in stats.metrics {
             printer(renderHeader(with: metric))
             printer(renderMeta(with: metric))
-            let totalDuration = metric.durations.filter({ $0.type == .total }).first
+            let total = totalDateInterval(from: metric)
             for line in metric.durations.filter({ $0.type != .total }) {
-                printer(renderDuration(line: line, total: totalDuration?.interval))
+                printer(renderDuration(line: line, total: total))
             }
         }
+    }
+
+    func totalDateInterval(from metric: Metric) -> DateInterval? {
+        if let total = metric.durations.filter({ $0.type == .total }).first {
+            return total.interval
+        } else if let first = metric.durations.first  {
+            // calculate total from all available Durations
+            var total = first.interval
+            total.duration += metric.durations.dropFirst().reduce(TimeInterval(0), { accumulated, duration in
+                return accumulated + duration.interval.duration
+            })
+            return total
+        }
+        return nil
     }
 
     func renderHeader(with metric: Metric) -> String {
@@ -85,7 +99,7 @@ public struct ConsoleRenderer: Renderer {
         return "|\(line.joined())|"
     }
 
-    private func renderMeta(with metric: Metric) -> String {
+    func renderMeta(with metric: Metric) -> String {
         let networkProtocolName = metric.transactionMetrics.networkProtocolName ?? "???"
         let meta = [
             "protocol: \(networkProtocolName)",
