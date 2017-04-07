@@ -5,18 +5,22 @@ Logs detailed metrics about URLSession tasks to the console, such as DNS lookup 
 ## Example output
 
 ```
-Task ID: 1 lifetime: 620.7ms redirects: 0
+Task ID: 1 lifetime: 594.9ms redirects: 0
 GET https://github.com/ -> 200 text/html, through network-load
 protocol: http/1.1 proxy: false reusedconn: false
-domain lookup     |#                                                                               |   4.0ms
-connect           |#############################################                                   | 323.0ms
-secure connection |               ##############################                                   | 215.0ms
-request           |                                            #                                   |   0.1ms
-response          |                                                                  ##############| 104.6ms
-                                                                                             total   597.9ms
+domain lookup     |#                                                                               |   3.0ms
+connect           |###############################################                                 | 330.0ms
+secure connection |               ################################                                 | 223.0ms
+request           |                                               #                                |   0.2ms
+server            |                                               ###################              | 130.9ms
+response          |                                                                 ###############| 105.8ms
+                                                                                             total   575.0ms
 ```
 
-The task lifetime is the time of the URLSessionTask creation to the response is delivered. The "through" key on the second line will tell you whether the response was fetched from cache, delivered by server push or by network load.
+A few notes on the data:
+* Task lifetime is the time of the URLSessionTask creation to the response is delivered.
+* The "through" key on the second line will tell you whether the response was fetched from cache, delivered by server push or by network load.
+* "server" is how long the server spent processing the request
 
 _Note_ that not all responses will deliver complete metrics, such as local cache fetches and other non-network loaded responses.
 

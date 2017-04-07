@@ -51,6 +51,12 @@ extension URLSessionTaskMetrics.ResourceFetchType {
     }
 }
 
+private extension Array where Element == Metric.Duration {
+    func find(type: Metric.DurationType) -> Element? {
+        return self.filter({ $0.type == type }).first
+    }
+}
+
 @available(iOS 10.0, *)
 public struct Metric {
     public let transactionMetrics: Measurable
@@ -85,6 +91,16 @@ public struct Metric {
             durations.append(duration)
         }
 
+        // Calculate how long the server spent processing the request
+        if let request = durations.find(type: .request),
+           let response = durations.find(type: .response),
+           let index = durations.index(of: response),
+           request.interval.duration > 0 {
+            let interval = DateInterval(start: request.interval.end, end: response.interval.start)
+            let duration = Duration(type: .server, interval: interval)
+            durations.insert(duration, at: index)
+        }
+
         self.durations = durations
     }
 
@@ -98,6 +114,7 @@ public struct Metric {
         case connect
         case secureConnection
         case request
+        case server
         case response
         case total
 
@@ -111,6 +128,8 @@ public struct Metric {
                 return "secure connection"
             case .request:
                 return "request"
+            case .server:
+                return "server"
             case .response:
                 return "response"
             case .total:
@@ -122,5 +141,12 @@ public struct Metric {
     public struct Duration {
         public let type: DurationType
         public let interval: DateInterval
+    }
+}
+
+@available(iOS 10.0, *)
+extension Metric.Duration: Equatable {
+    public static func ==(lhs: Metric.Duration, rhs: Metric.Duration) -> Bool {
+        return rhs.type == lhs.type && rhs.interval == rhs.interval
     }
 }
