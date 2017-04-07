@@ -35,7 +35,7 @@ class RenderTests: XCTestCase {
         let duration = Metric.Duration(type: .domainLookup, interval: DateInterval(start: seconds(ago: 3), end: seconds(ago: 2)))
         let total = DateInterval(start: seconds(ago: 3), end: seconds(ago: 0))
         let output = renderer.renderDuration(line: duration, total: total)
-        XCTAssertEqual(output, "domain lookup      |##################################                                                                  | 1000.0")
+        XCTAssertEqual(output, "domain lookup     |###########################                                                     |1000.0ms")
     }
 
     func testTotalDuration() {
@@ -45,6 +45,12 @@ class RenderTests: XCTestCase {
         let total = renderer.totalDateInterval(from: metric)
         XCTAssert(total != nil)
         XCTAssertEqual(total!, DateInterval(start: duration1.interval.start, end: duration2.interval.end))
+    }
+
+    func testSummary() {
+        let interval = DateInterval(start: seconds(ago: 3), end: seconds(ago: 0))
+        let output = renderer.renderMetricSummary(for: interval)
+        XCTAssertEqual(output, "                                                                                            total   3000.0ms")
     }
 }
 

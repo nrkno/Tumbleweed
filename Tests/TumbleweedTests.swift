@@ -29,10 +29,10 @@ class TumbleweedTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1.0) { (error) in
-//            XCTAssertEqual(self.printer.lines.count, 9)
-            XCTAssertEqual(self.printer.lines[0], "Task ID: 1 (redirects: 0)")
+            XCTAssertEqual(self.printer.lines.count, 14)
+            XCTAssertTrue(self.printer.lines[0].hasPrefix("Task ID: 1 lifetime: "))
             XCTAssertEqual(self.printer.lines[1], "GET https://httpbin.org/get -> 200 application/json, through local-cache")
-//            XCTAssertEqual(self.printer.lines[2], "protocol: http/1.1 proxy: false reusedconn: false fetch type: network-load")
+            XCTAssertEqual(self.printer.lines[6], "GET https://httpbin.org/get -> 200 application/json, through network-load")
             print("")
             print(self.printer.lines.joined(separator: "\n"))
             print("")

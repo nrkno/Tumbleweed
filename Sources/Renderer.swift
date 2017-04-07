@@ -19,7 +19,7 @@ import Foundation
 
 extension TimeInterval {
     var ms: String {
-        return String(format: "%.1f", self * 1000)
+        return String(format: "%.1fms", self * 1000)
     }
 }
 
@@ -29,19 +29,23 @@ public protocol Renderer {
 
 public struct ConsoleRenderer: Renderer {
     public var printer: (String) -> Void = { NSLog($0) }
+    let columns = (left: 18, middle: 82, right: 8)
 
     public init() {
 
     }
 
     public func render(with stats: Tumbleweed) {
-        printer("Task ID: \(stats.task.taskIdentifier) (redirects: \(stats.redirectCount))")
+        printer("Task ID: \(stats.task.taskIdentifier) lifetime: \(stats.taskInterval.duration.ms) redirects: \(stats.redirectCount)")
         for metric in stats.metrics {
             printer(renderHeader(with: metric))
             printer(renderMeta(with: metric))
             let total = totalDateInterval(from: metric)
             for line in metric.durations.filter({ $0.type != .total }) {
                 printer(renderDuration(line: line, total: total))
+            }
+            if let total = total {
+                printer(renderMetricSummary(for: total))
             }
         }
     }
@@ -75,13 +79,15 @@ public struct ConsoleRenderer: Renderer {
     }
 
     func renderDuration(line: Metric.Duration, total: DateInterval?) -> String {
-        let name = line.type.name.padding(toLength: 18, withPad: " ", startingAt: 0)
-        let plot = total.flatMap({ visualize(interval: line.interval, total: $0) }) ?? ""
-        return "\(name) \(plot) \(line.interval.duration.ms)"
+        let name = line.type.name.padding(toLength: columns.left, withPad: " ", startingAt: 0)
+        let plot = total.flatMap({ visualize(interval: line.interval, total: $0, within: self.columns.middle) }) ?? ""
+        let time = line.interval.duration.ms.leftPadding(toLength: columns.right, withPad: " ")
+        return "\(name)\(plot)\(time)"
     }
 
-    func visualize(interval: DateInterval, total: DateInterval, within width: Int = 100) -> String {
+    func visualize(interval: DateInterval, total: DateInterval, within: Int = 100) -> String {
         precondition(total.intersects(total), "supplied duration does not intersect with the total duration")
+        let width = within - 2
         if interval.duration == 0 {
             return "|" + String(repeatElement(" ", count: width)) + "|"
         }
@@ -111,5 +117,21 @@ public struct ConsoleRenderer: Renderer {
             "reusedconn: \(metric.transactionMetrics.isReusedConnection)",
         ]
         return meta.joined(separator: " ")
+    }
+
+    func renderMetricSummary(for interval: DateInterval) -> String {
+        let width = columns.left + columns.middle + columns.right
+        return "total   \(interval.duration.ms)".leftPadding(toLength: width, withPad: " ")
+    }
+}
+
+private extension String {
+    func leftPadding(toLength: Int, withPad character: Character) -> String {
+        let newLength = self.characters.count
+        if newLength < toLength {
+            return String(repeatElement(character, count: toLength - newLength)) + self
+        } else {
+            return self.substring(from: index(self.startIndex, offsetBy: newLength - toLength))
+        }
     }
 }
