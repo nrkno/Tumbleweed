@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = "Tumbleweed"
   s.version      = "0.1"
-  s.summary      = ""
+  s.summary      = "Logs detailed metrics about URLSession tasks to the console"
   s.description  = <<-DESC
-    Your description here.
+    Logs detailed metrics about URLSession tasks to the console, such as DNS lookup durations, request and response times and more
   DESC
   s.homepage     = "https://github.com/nrkno/Tumbleweed"
   s.license      = { :type => "MIT", :file => "LICENSE" }
