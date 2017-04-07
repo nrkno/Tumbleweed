@@ -8,7 +8,6 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/nrkno/Tumbleweed"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Johan Sørensen" => "johan.sorensen@nrk.no" }
-  s.social_media_url   = ""
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "2.0"
