@@ -37,16 +37,16 @@ public struct ConsoleRenderer: Renderer {
     public func render(with stats: Tumbleweed) {
         printer("Task ID: \(stats.task.taskIdentifier) (redirects: \(stats.redirectCount))")
         for metric in stats.metrics {
-            renderHeader(with: metric)
-            renderMeta(with: metric)
+            printer(renderHeader(with: metric))
+            printer(renderMeta(with: metric))
             let totalDuration = metric.durations.filter({ $0.type == .total }).first
             for line in metric.durations.filter({ $0.type != .total }) {
-                renderDuration(line: line, total: totalDuration?.interval)
+                printer(renderDuration(line: line, total: totalDuration?.interval))
             }
         }
     }
 
-    private func renderHeader(with metric: Metric) {
+    func renderHeader(with metric: Metric) -> String {
         let method = metric.transactionMetrics.request.httpMethod ?? "???"
         let url = metric.transactionMetrics.request.url?.absoluteString ?? "???"
 
@@ -57,16 +57,16 @@ public struct ConsoleRenderer: Renderer {
         } else {
             responseLine = "[response error]"
         }
-        printer("\(method) \(url) -> \(responseLine)")
+        return "\(method) \(url) -> \(responseLine), through \(metric.transactionMetrics.resourceFetchType.name)"
     }
 
-    private func renderDuration(line: Metric.Duration, total: DateInterval?) {
+    func renderDuration(line: Metric.Duration, total: DateInterval?) -> String {
         let name = line.type.name.padding(toLength: 18, withPad: " ", startingAt: 0)
         let plot = total.flatMap({ visualize(interval: line.interval, total: $0) }) ?? ""
-        printer("\(name) \(plot) \(line.interval.duration.ms)")
+        return "\(name) \(plot) \(line.interval.duration.ms)"
     }
 
-    private func visualize(interval: DateInterval, total: DateInterval, within width: Int = 100) -> String {
+    func visualize(interval: DateInterval, total: DateInterval, within width: Int = 100) -> String {
         precondition(total.intersects(total), "supplied duration does not intersect with the total duration")
         let relativeStart = (interval.start.timeIntervalSince1970 - total.start.timeIntervalSince1970) / total.duration
         let relativeEnd = 1.0 - (total.end.timeIntervalSince1970 - interval.end.timeIntervalSince1970) / total.duration
@@ -85,14 +85,13 @@ public struct ConsoleRenderer: Renderer {
         return "|\(line.joined())|"
     }
 
-    private func renderMeta(with metric: Metric) {
+    private func renderMeta(with metric: Metric) -> String {
         let networkProtocolName = metric.transactionMetrics.networkProtocolName ?? "???"
         let meta = [
             "protocol: \(networkProtocolName)",
             "proxy: \(metric.transactionMetrics.isProxyConnection)",
             "reusedconn: \(metric.transactionMetrics.isReusedConnection)",
-            "fetch type: \(metric.transactionMetrics.resourceFetchType.name)",
         ]
-        printer(meta.joined(separator: " "))
+        return meta.joined(separator: " ")
     }
 }
