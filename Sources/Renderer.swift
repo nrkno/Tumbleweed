@@ -39,8 +39,9 @@ public struct ConsoleRenderer: Renderer {
         for metric in stats.metrics {
             renderHeader(with: metric)
             renderMeta(with: metric)
-            for line in metric.durations {
-                renderDuration(line: line)
+            let totalDuration = metric.durations.filter({ $0.type == .total }).first
+            for line in metric.durations.filter({ $0.type != .total }) {
+                renderDuration(line: line, total: totalDuration?.interval)
             }
         }
     }
@@ -59,8 +60,26 @@ public struct ConsoleRenderer: Renderer {
         printer("\(method) \(url) -> \(responseLine) (redirect #\(metric.redirectIndex))")
     }
 
-    private func renderDuration(line: Metric.Duration) {
-        printer("\(line.type.name)  \(line.interval.duration.ms)")
+    private func renderDuration(line: Metric.Duration, total: DateInterval?) {
+        let name = line.type.name.padding(toLength: 18, withPad: " ", startingAt: 0)
+        let plot = total.flatMap({ visualize(interval: line.interval, total: $0) }) ?? ""
+        printer("\(name) \(plot) \(line.interval.duration.ms)")
+    }
+
+    private func visualize(interval: DateInterval, total: DateInterval, within width: Int = 100) -> String {
+        precondition(total.intersects(total), "supplied duration does not intersect with the total duration")
+        let relativeStart = (interval.start.timeIntervalSince1970 - total.start.timeIntervalSince1970) / total.duration
+        let relativeEnd = 1.0 - (total.end.timeIntervalSince1970 - interval.end.timeIntervalSince1970) / total.duration
+
+        let factor = 1.0 / Double(width)
+        let startIndex = Int((relativeStart / factor))
+        let endIndex = Int((relativeEnd / factor))
+
+        var line = ""
+        line += String(repeatElement(" ", count: (0..<startIndex).count))
+        line += String(repeatElement("#", count: (startIndex..<endIndex).count))
+        line += String(repeatElement(" ", count: (endIndex..<width).count))
+        return "|\(line)|"
     }
 
     private func renderMeta(with metric: Metric) {
