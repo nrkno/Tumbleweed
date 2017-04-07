@@ -18,13 +18,13 @@ import Foundation
 //summary   [task lifetime: 1.6s]                                         total  96.9ms
 
 
-public struct Tumbleweed {
+public struct SessionMetrics {
     public let task: URLSessionTask
     public let metrics: [Metric]
     public let redirectCount: Int
     public let taskInterval: DateInterval
 
-    public init(sessionTaskMetrics: URLSessionTaskMetrics, task: URLSessionTask) {
+    public init(source sessionTaskMetrics: URLSessionTaskMetrics, task: URLSessionTask) {
         self.task = task
         self.redirectCount = sessionTaskMetrics.redirectCount
         self.taskInterval = sessionTaskMetrics.taskInterval

@@ -24,7 +24,7 @@ extension TimeInterval {
 }
 
 public protocol Renderer {
-    func render(with stats: Tumbleweed)
+    func render(with stats: SessionMetrics)
 }
 
 public struct ConsoleRenderer: Renderer {
@@ -35,7 +35,7 @@ public struct ConsoleRenderer: Renderer {
 
     }
 
-    public func render(with stats: Tumbleweed) {
+    public func render(with stats: SessionMetrics) {
         printer("Task ID: \(stats.task.taskIdentifier) lifetime: \(stats.taskInterval.duration.ms) redirects: \(stats.redirectCount)")
         for metric in stats.metrics {
             printer(renderHeader(with: metric))

@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 import Tumbleweed
 
-class TumbleweedTests: XCTestCase {
+class SessionMetricsTests: XCTestCase {
     let printer = OutputBufferingPrinter()
 
     override func setUp() {
@@ -65,7 +65,7 @@ final class SessionDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelegat
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
-        let stats = Tumbleweed(sessionTaskMetrics: metrics, task: task)
+        let stats = SessionMetrics(source: metrics, task: task)
         var renderer = ConsoleRenderer()
         renderer.printer = self.printer
         stats.render(with: renderer)
